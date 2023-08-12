@@ -1,0 +1,83 @@
+body,
+ul {
+  margin: 0;
+  padding: 0;
+}
+
+/* Navbar styles */
+.navbar {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  background-color: #333;
+  color: white;
+  padding: 10px 20px;
+}
+
+.navbar-logo {
+  font-size: 24px;
+  font-weight: bold;
+}
+
+.connect-wallet-button {
+  background-color: #4caf50;
+  border: none;
+  color: white;
+  padding: 8px 16px;
+  text-align: center;
+  text-decoration: none;
+  display: inline-block;
+  font-size: 14px;
+  border-radius: 4px;
+  cursor: pointer;
+}
+/** Map*/
+#map {
+  flex: 1;
+  height: 450px;
+  background-color: #aaa;
+}
+
+/* Sidebar styles */
+.sidebar {
+  position: fixed;
+  left: 0;
+  top: 10;
+  width: 260px;
+  height: 100%;
+  background-color: #333;
+  color: white;
+  padding-top: 20px;
+  box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.2);
+}
+
+.sidebar ul {
+  list-style-type: none;
+  padding: 0;
+}
+
+.sidebar li {
+  padding: 10px 20px;
+  font-size: 18px;
+  cursor: pointer;
+  transition: background-color 0.3s;
+}
+
+.sidebar li:hover {
+  background-color: #444;
+}
+
+/* Main content styles */
+/* Add some margin and padding to the content */
+.main-content {
+  margin-left: 250px;
+  padding: 20px;
+}
+
+#message--window {
+  width: 350px;
+  height: 200px;
+  border: 1px solid #ccc;
+  padding: 10px;
+  overflow-y: scroll;
+}

@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Rendevous</title>
+    <link rel="stylesheet" href="styles.css" />
+    <script src="https://unpkg.com/streamr-client@latest/streamr-client.web.js"></script>
+
+    <script
+      defer
+      src="https://cdn.ethers.io/lib/ethers-5.7.2.umd.min.js"
+      type="application/javascript"
+    ></script>
+
+    <!-- <link
+      rel="stylesheet"
+      href="https://unpkg.com/leaflet@1.9.3/dist/leaflet.css"
+      integrity="sha256-kLaT2GOSpHechhsozzB+flnD+zUyjE2LlfWPgU04xyI="
+      crossorigin=""
+    />
+    <script
+      defer
+      src="https://unpkg.com/leaflet@1.9.3/dist/leaflet.js"
+      integrity="sha256-WBkoXOwTeyKclOHuWtc+i2uENFpDZ9YPdf5Hf+D7ewM="
+      crossorigin=""
+    ></script> -->
+
+    <link
+      rel="stylesheet"
+      href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css"
+      integrity="sha256-p4NxAoJBhIIN+hmNHrzRCf9tD/miZyoHS5obTRR9BMY="
+      crossorigin=""
+    />
+
+    <!-- Make sure you put this AFTER Leaflet's CSS -->
+    <script
+      src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"
+      integrity="sha256-20nQCchB9co0qIjJZRGuk2/Z9VM+kNiyxNV1lvTlZBo="
+      crossorigin=""
+    ></script>
+
+    <script defer src="./src/connectwallet.js"></script>
+    <script defer src="index.js"></script>
+  </head>
+  <body>
+    <div class="navbar">
+      <div class="navbar-logo">Rendevous</div>
+      <button class="connect-wallet-button" onclick="connectWallet()">
+        Connect Wallet
+      </button>
+    </div>
+    <div class="sidebar">
+      <ul>
+        <li>Home</li>
+        <li>View Streamers Location</li>
+        <li>Stream Chat</li>
+        <li>MarketPlace</li>
+      </ul>
+    </div>
+    <div class="main-content">
+      <div>
+        <button onclick="publishData()">Publish to Stream</button>
+      </div>
+      <div id="message--window"></div>
+      <div id="map"></div>
+    </div>
+  </body>
+</html>

@@ -1,7 +1,25 @@
 {
+  "name": "rendevous",
+  "version": "1.0.0",
+  "description": "a position sharing decentralized application",
+  "main": "index.js",
+  "scripts": {
+    "start": "parcel index.html"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/midesofek/rendevous-data-stream.git"
+  },
+  "author": "mide-sofek",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/midesofek/rendevous-data-stream/issues"
+  },
+  "homepage": "https://github.com/midesofek/rendevous-data-stream#readme",
   "dependencies": {
     "dotenv": "^16.3.1",
     "ethers": "^5.7.2",
+    "parcel": "^2.9.3",
     "streamr-client": "^8.5.5"
   }
 }

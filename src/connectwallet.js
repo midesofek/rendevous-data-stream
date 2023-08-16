@@ -1,4 +1,5 @@
 // connect wallet
+
 const connectWallet = async function () {
   try {
     if (!window.ethereum) return console.log("No wallet installed");
@@ -14,3 +15,5 @@ const connectWallet = async function () {
     console.error(err.message);
   }
 };
+
+module.exports = { connectWallet };

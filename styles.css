@@ -1,5 +1,21 @@
-body,
-ul {
+body {
+  margin: 0;
+  padding: 0;
+  list-style: none;
+  height: 100vh;
+}
+h1,
+h2,
+h3,
+p,
+ul,
+li {
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+* {
   margin: 0;
   padding: 0;
 }
@@ -9,18 +25,36 @@ ul {
   display: flex;
   justify-content: space-between;
   align-items: center;
-  background-color: #333;
+  background-color: #f55f08;
   color: white;
-  padding: 10px 20px;
+  padding: 10px;
 }
 
+/* Logo styling */
 .navbar-logo {
   font-size: 24px;
   font-weight: bold;
 }
 
+/* Links in the navbar */
+.navbar-links {
+  display: flex;
+  align-items: center;
+}
+
+.navbar-link {
+  font-size: 18px;
+  color: #fff;
+  text-decoration: none;
+  margin-right: 40px;
+}
+
+.navbar-link:hover {
+  background-color: #f47f3c;
+}
+
 .connect-wallet-button {
-  background-color: #4caf50;
+  background-color: #903500;
   border: none;
   color: white;
   padding: 8px 16px;
@@ -31,24 +65,55 @@ ul {
   border-radius: 4px;
   cursor: pointer;
 }
+
+.connect-wallet-button:hover {
+  background-color: #f47f3c; /* Darker blue background color on hover */
+}
+
 /** Map*/
 #map {
-  flex: 1;
-  height: 450px;
-  background-color: #aaa;
+  /* flex: 1; */
+  /* height: 400px; */
+  /* background-color: #aaa; */
+  position: absolute;
+  top: 50px;
+  left: 0px; /** or 10 to zoom map away from the screen*/
+  bottom: 0px;
+  right: 0px;
+  z-index: 1; /* Adjust the z-index for the map */
 }
 
 /* Sidebar styles */
+.toggle-sidebar-button {
+  background: none;
+  border: none;
+  font-size: 24px;
+  color: #fff;
+  cursor: pointer;
+  margin-right: -120px;
+}
+
 .sidebar {
   position: fixed;
   left: 0;
-  top: 10;
+  top: 50px;
   width: 260px;
   height: 100%;
-  background-color: #333;
+  background-color: #ed6d23;
   color: white;
-  padding-top: 20px;
+  /* padding-top: 20px; */
   box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.2);
+  z-index: 2; /**  Set a higher z-index for the sidebar */
+
+  flex-basis: 50rem;
+  padding: 3rem 5rem 4rem 5rem;
+  display: flex;
+  flex-direction: column;
+  transition: transform 0.3s;
+}
+
+.sidebar-hidden {
+  transform: translateX(-415px); /* Move the sidebar off-screen when hidden */
 }
 
 .sidebar ul {
@@ -81,3 +146,51 @@ ul {
   padding: 10px;
   overflow-y: scroll;
 }
+
+.hidden {
+  display: none;
+}
+
+/** Stream Chat Window */
+.chat-container {
+  max-width: 400px;
+  margin: 0 auto;
+  border: 1px solid #ddd;
+  background-color: #fff;
+}
+.message {
+  padding: 10px;
+  margin: 10px;
+  border-radius: 10px;
+  max-width: 70%;
+}
+.message.incoming {
+  background-color: #e0e0e0;
+  align-self: flex-start;
+}
+.message.outgoing {
+  background-color: #dcf8c6;
+  align-self: flex-end;
+}
+.message-content {
+  font-size: 16px;
+}
+.message-timestamp {
+  font-size: 12px;
+  color: #888;
+}
+.input-container {
+  display: flex;
+  align-items: center;
+  padding: 10px;
+  border-top: 1px solid #ddd;
+  background-color: #fff;
+}
+.input-field {
+  flex-grow: 1;
+  padding: 8px;
+  border: none;
+  border-radius: 20px;
+}
+
+/** ******************** */

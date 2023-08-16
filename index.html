@@ -4,6 +4,7 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Rendevous</title>
+    <link rel="shortcut icon" href="./public/favicon.png" type="image/x-icon" />
     <link rel="stylesheet" href="styles.css" />
     <script src="https://unpkg.com/streamr-client@latest/streamr-client.web.js"></script>
 
@@ -39,31 +40,83 @@
       integrity="sha256-20nQCchB9co0qIjJZRGuk2/Z9VM+kNiyxNV1lvTlZBo="
       crossorigin=""
     ></script>
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css"
+    />
 
-    <script defer src="./src/connectwallet.js"></script>
-    <script defer src="index.js"></script>
+    <script type="module" src="./src/index.js"></script>
   </head>
   <body>
-    <div class="navbar">
-      <div class="navbar-logo">Rendevous</div>
-      <button class="connect-wallet-button" onclick="connectWallet()">
-        Connect Wallet
-      </button>
+    <div>
+      <div class="navbar">
+        <div class="navbar-logo">
+          <span class="brand">Rendevous</span>
+        </div>
+        <button class="toggle-sidebar-button">
+          <i class="fas fa-bars"></i>
+        </button>
+
+        <ul class="navbar-links">
+          <li>
+            <a href="#" class="navbar--view-streamers-location navbar-link"
+              >Join Stream</a
+            >
+          </li>
+          <li>
+            <a href="#" class="navbar-link">Marketplace</a>
+          </li>
+          <li>
+            <a href="#" class="navbar--view-stramers-chat navbar-link"
+              >Stream Chat</a
+            >
+          </li>
+          <li><a href="#" class="navbar-link">Docs</a></li>
+        </ul>
+        <button class="connect-wallet-button">Connect Wallet</button>
+      </div>
+      <div class="sidebar sidebar-hidden">
+        <button class="publish--stream">Publish to Stream</button>
+        <!-- <ul>
+          <li class="sidebar--home">Home</li>
+          <li class="sidebar--view-streamers-location">
+            View Streamers Location
+          </li>
+          <li class="sidebar--view-stramers-chat">Stream Chat</li>
+          <li class="sidebar--marketplace">MarketPlace</li>
+        </ul> -->
+      </div>
+      <!-- <div class="sidebar">
+        <p>This is text</p>
+      </div> -->
     </div>
-    <div class="sidebar">
-      <ul>
-        <li>Home</li>
-        <li>View Streamers Location</li>
-        <li>Stream Chat</li>
-        <li>MarketPlace</li>
-      </ul>
-    </div>
-    <div class="main-content">
+    <div class="stream-window hidden">
       <div>
-        <button onclick="publishData()">Publish to Stream</button>
+        <!-- <button class="publish--stream">Publish to Stream</button> -->
       </div>
       <div id="message--window"></div>
-      <div id="map"></div>
+      <!-- <div id="map"></div> -->
     </div>
+    <div class="stream--chat-window hidden">
+      <div class="chat-container">
+        <div class="message incoming">
+          <div class="message-content">Hello there!</div>
+          <div class="message-timestamp">12:30 PM</div>
+        </div>
+        <div class="message outgoing">
+          <div class="message-content">Hi! How are you?</div>
+          <div class="message-timestamp">12:32 PM</div>
+        </div>
+      </div>
+      <div class="input-container">
+        <input
+          class="input-field"
+          type="text"
+          placeholder="Type a message..."
+        />
+        <button>Send</button>
+      </div>
+    </div>
+    <div id="map"></div>
   </body>
 </html>

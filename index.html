@@ -45,7 +45,7 @@
       href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css"
     />
 
-    <script type="module" src="./src/index.js"></script>
+    <script type="module" src="./index.js"></script>
   </head>
   <body>
     <div>
@@ -60,41 +60,93 @@
         <ul class="navbar-links">
           <li>
             <a href="#" class="navbar--view-streamers-location navbar-link"
-              >Join Stream</a
-            >
+              >Join Stream <i class="fa fa-database" aria-hidden="true"></i
+            ></a>
           </li>
           <li>
-            <a href="#" class="navbar-link">Marketplace</a>
+            <a href="#" class="navbar-link"
+              >Marketplace <i class="fa fa-exchange" aria-hidden="true"></i>
+            </a>
           </li>
           <li>
             <a href="#" class="navbar--view-stramers-chat navbar-link"
-              >Stream Chat</a
-            >
+              >Stream Chat <i class="fa fa-comments" aria-hidden="true"></i>
+            </a>
           </li>
-          <li><a href="#" class="navbar-link">Docs</a></li>
+          <li>
+            <a href="#" class="navbar-link"
+              >Docs <i class="fa fa-external-link" aria-hidden="true"></i>
+            </a>
+          </li>
         </ul>
         <button class="connect-wallet-button">Connect Wallet</button>
       </div>
-      <div class="sidebar sidebar-hidden">
-        <button class="publish--stream">Publish to Stream</button>
-        <!-- <ul>
-          <li class="sidebar--home">Home</li>
-          <li class="sidebar--view-streamers-location">
-            View Streamers Location
-          </li>
-          <li class="sidebar--view-stramers-chat">Stream Chat</li>
-          <li class="sidebar--marketplace">MarketPlace</li>
-        </ul> -->
+      <div class="parentSide">
+        <div class="sidebar sidebar-hidden">
+          <form class="form">
+            <div class="form__row form__row-top">
+              <input type="text" name="" id="" placeholder="Enter Stream ID" />
+              <!--This should notify if you have access -->
+            </div>
+            <div class="form__row form__row-inline">
+              <button id="join-data-stream">
+                Join Data Stream
+                <i class="fa fa-database" aria-hidden="true"></i>
+              </button>
+              <button class="publish--stream">
+                Share Your Position
+                <!-- <i class="fa fa-map-marker" aria-hidden="true"></i> -->
+              </button>
+            </div>
+            <div class="form__row form__row-inline">
+              <button id="button-stop-sharing">Stop Position Sharing</button>
+              <button id="button-unsubscribe">Unsubscribe</button>
+            </div>
+            <button
+              class="form__btn"
+              onclick="window.open('https://streamr.network/hub/streams/new', '_blank')"
+            >
+              +Create New Stream
+              <i class="fa fa-external-link" aria-hidden="true"></i>
+            </button>
+          </form>
+          <p class="copyright">
+            &copy; Mide. Powered By
+            <a
+              class="twitter-link"
+              target="_blank"
+              href="https://streamr.network/"
+              >Streamr Network</a
+            >.<br />
+            <a href="https://github.com/midesofek" target="_blank">
+              <img
+                class="github-logo"
+                src="https://github.githubassets.com/images/modules/logos_page/GitHub-Mark.png"
+                alt="GitHub Logo"
+              />
+            </a>
+          </p>
+        </div>
       </div>
-      <!-- <div class="sidebar">
-        <p>This is text</p>
-      </div> -->
+    </div>
+    <div id="message--window">
+      <div class="message-header">
+        <h2>Incoming Positions</h2>
+        <button class="close-button toggle-message-button">
+          <i class="fa fa-search" aria-hidden="true"></i>
+          <i class="fas fa-times" aria-hidden="true"></i>
+          <!-- <i class="fa fa-search"></i>
+          <i class="fas fa-times"></i> -->
+        </button>
+      </div>
+      <div class="message-content">
+        <!-- Streams-Messages will be added dynamically here -->
+      </div>
     </div>
     <div class="stream-window hidden">
       <div>
         <!-- <button class="publish--stream">Publish to Stream</button> -->
       </div>
-      <div id="message--window"></div>
       <!-- <div id="map"></div> -->
     </div>
     <div class="stream--chat-window hidden">

@@ -1,5 +1,5 @@
 ///////////////////////////////////////////////
-// Private Location Sharing Feature
+// Private Location Sharing Feature [0x..92 is at Los Angeles, Time: Timestamp]
 ///////////////////////////////////////////////
 
 // ✅ 1. Add connect wallet button
@@ -14,30 +14,46 @@
 // ✅ 3. This marker should show the address of the user that connected
 // Tip: can add an event listener to listen for marker addition - then notify subscriber
 
-// NEXT: Rebuild UI to fit new plan design
-// 4. Display all published data points on screen
+// ✅ NEXT: Rebuild UI to fit new plan design
+// ✅ 4. Display all published data points on screen
 // 5. Create the chat window to enable private chatting
 // 6. Create the Marketplace to enable data selling through smart contracts
+
+////////////////////////////// Phase 3 //////////////////////////////
+// - ✅ Build the message window that displays new data published to the stream
+// - ✅ Build the sidebar card for controlling streams to join / subscribe / unsubscribe / join a new stream
+// - ✅ Add footer that shows GitHub and streamr
+//////////////////////////////////////////////////////////////////////
+
+////////////////////////////// Phase 4 //////////////////////////////
+// - Edit the stream configuration, to enable published streams to coming in at intervals
+// - Search for an API to generate Location/Position data from
 //////////////////////////////////////////////////////////////////////
 
 import { StreamrClient } from "streamr-client";
-import { connectWallet } from "./connectwallet";
-import { truncAddress } from "../utils/helper";
+import { connectWallet } from "./src/connectwallet";
+import { truncAddress } from "./utils/helper";
 
 // require("dotenv").config();
 
-const msgDisplay = document.getElementById("message--window");
+const messageWindow = document.getElementById("message--window");
+const closeMessageButton = document.querySelector(".close-button");
+const toggleMessageButton = document.querySelector(".toggle-message-button");
+const messageContent = document.querySelector(".message-content");
 const btnConnectWallet = document.querySelector(".connect-wallet-button");
 const btnPublishStreamData = document.querySelector(".publish--stream");
+const btnJoinStream = document.getElementById("join-data-stream");
+const btnUnsubscribe = document.getElementById("button-unsubscribe");
+const btnStopSharingPosition = document.getElementById("button-stop-sharing");
 
+const toggleSidebarButton = document.querySelector(".toggle-sidebar-button");
+const sidebar = document.querySelector(".sidebar");
 const sidebarViewStreams = document.querySelector(
   ".navbar--view-streamers-location"
 );
 const sidebarStreamChat = document.querySelector(".navbar--view-stramers-chat");
 const pageViewStreams = document.querySelector(".stream-window");
 const pageViewStreamChat = document.querySelector(".stream--chat-window");
-const toggleSidebarButton = document.querySelector(".toggle-sidebar-button");
-const sidebar = document.querySelector(".sidebar");
 
 // connect wallet button
 btnConnectWallet.addEventListener("click", connectWallet);
@@ -50,6 +66,15 @@ const toggleSideBar = () => {
   sidebar.classList.toggle("sidebar-hidden");
 };
 toggleSidebarButton.addEventListener("click", toggleSideBar);
+
+// Toggle the message window and the x button
+const toggeleMessageWindow = () => {
+  console.log("Button works");
+  messageContent.classList.toggle("hidden");
+  toggleMessageButton.classList.toggle("show-search-icon");
+  toggleMessageButton.classList.toggle("remove-times-icon");
+};
+closeMessageButton.addEventListener("click", toggeleMessageWindow);
 
 //////////////////////////////////////////////////////////////////////////////
 
@@ -102,13 +127,27 @@ const createStreamId = async function (uniquename1, uniquename2) {
 /////////////////////////// PUBLISH / SUBSCRIBE ////////////////////////////////
 ////////////////////////////////////////////////////////////////////////////////
 
-// // fn to get stream with ID
-// const getStream = async () => {
-// const id = await client.getStream(devStreamId);
-// };
-// getStream();
+// function to get stream with ID
+const getStream = async function (inputStreamId) {
+  console.log("get Btn Works");
+  // this.#appId = await client.getStream(inputStreamId);
+  // const appId = await client.getStream(inputStreamId);
+};
+btnJoinStream.addEventListener("click", getStream);
 
-// fn to publish streams
+// function to stop sharing position
+const stopSharingPosition = async function () {
+  console.log("Stop sharing btn works");
+};
+btnStopSharingPosition.addEventListener("click", stopSharingPosition);
+
+// function to unsubscribe from stream
+const unsubscribeFromStream = async () => {
+  console.log("Unsubscribe works");
+};
+btnUnsubscribe.addEventListener("click", unsubscribeFromStream);
+
+// function to publish streams
 const userCoords = [];
 
 const publishData = async () => {
@@ -125,17 +164,16 @@ const publishData = async () => {
 };
 btnPublishStreamData.addEventListener("click", publishData);
 
-// fn to subscribe to streams
+// function to subscribe to streams
 let position = 0;
 
 client.subscribe(devStreamId, (data, metadata) => {
   const timeReceived = new Date(metadata.timestamp).toISOString();
-  console.log(metadata);
 
   const messageElement = document.createElement("p");
   messageElement.textContent = `${data.message} at: ${timeReceived}`;
   position = data.message;
-  msgDisplay.appendChild(messageElement);
+  messageContent.appendChild(messageElement);
 
   renderLocationMarker(position, metadata.publisherId);
 });

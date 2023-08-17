@@ -18,6 +18,7 @@ li {
 * {
   margin: 0;
   padding: 0;
+  box-sizing: inherit;
 }
 
 /* Navbar styles */
@@ -70,20 +71,11 @@ li {
   background-color: #f47f3c; /* Darker blue background color on hover */
 }
 
-/** Map*/
-#map {
-  /* flex: 1; */
-  /* height: 400px; */
-  /* background-color: #aaa; */
-  position: absolute;
-  top: 50px;
-  left: 0px; /** or 10 to zoom map away from the screen*/
-  bottom: 0px;
-  right: 0px;
-  z-index: 1; /* Adjust the z-index for the map */
+/* Sidebar styles */
+.parentSide {
+  display: flex;
 }
 
-/* Sidebar styles */
 .toggle-sidebar-button {
   background: none;
   border: none;
@@ -97,23 +89,23 @@ li {
   position: fixed;
   left: 0;
   top: 50px;
-  width: 260px;
-  height: 100%;
-  background-color: #ed6d23;
+  width: 340px;
+  height: 100vh;
+  background-color: #bb4703;
   color: white;
-  /* padding-top: 20px; */
+  padding-top: 20px;
   box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.2);
   z-index: 2; /**  Set a higher z-index for the sidebar */
 
   flex-basis: 50rem;
-  padding: 3rem 5rem 4rem 5rem;
+  padding: 3rem;
   display: flex;
   flex-direction: column;
   transition: transform 0.3s;
 }
 
 .sidebar-hidden {
-  transform: translateX(-415px); /* Move the sidebar off-screen when hidden */
+  transform: translateX(-430px); /* Move the sidebar off-screen when hidden */
 }
 
 .sidebar ul {
@@ -132,6 +124,119 @@ li {
   background-color: #444;
 }
 
+/* *************************** */
+/* Form styles */
+.form {
+  display: flex;
+  flex-direction: column;
+  padding: 20px;
+}
+
+.form__row {
+  margin-bottom: 15px;
+}
+
+.form__row-top {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.form__row-inline {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-top: 10px; /* Add some space between the rows */
+}
+
+.form input[type="text"],
+.form button {
+  padding: 10px;
+  border: none;
+  border-radius: 4px;
+  font-size: 14px;
+}
+
+.form input[type="text"] {
+  width: 100%;
+  box-shadow: 0px 0px 5px rgba(0, 0, 0, 0.2);
+}
+
+.form button {
+  background-color: #f55f08;
+  color: white;
+  cursor: pointer;
+  transition: background-color 0.3s;
+}
+
+.form button:hover {
+  background-color: #f47f3c;
+}
+
+.form__btn {
+  background-color: #333;
+  color: white;
+  border: none;
+  border-radius: 4px;
+  padding: 10px;
+  font-size: 14px;
+  cursor: pointer;
+  transition: background-color 0.3s;
+}
+
+.form__btn:hover {
+  background-color: #444;
+}
+
+/* *************************** */
+
+/* *************************** */
+/* Sidebar Footer */
+.copyright {
+  /* position: relative; */
+  /* margin-top: auto; */
+  /* font-size: 1.3rem; */
+  /* text-align: center; */
+
+  /* background-color: #444; */
+  color: white;
+  padding: 10px;
+  text-align: center;
+  font-size: 12px;
+  margin-top: 25rem;
+}
+
+.github-logo {
+  width: 24px;
+  height: 24px;
+  margin-top: 0.5rem;
+}
+
+.twitter-link:link,
+.twitter-link:visited {
+  color: #fff;
+  transition: all 0.2s;
+}
+
+.twitter-link:hover,
+.twitter-link:active {
+  color: #fff;
+}
+/* *************************** */
+
+/** Map*/
+#map {
+  /* flex: 1; */
+  /* height: 400px; */
+  /* background-color: #aaa; */
+  position: absolute;
+  top: 50px;
+  left: 0px; /** or 10 to zoom map away from the screen*/
+  bottom: 0px;
+  right: 0px;
+  z-index: 1; /* Adjust the z-index for the map */
+}
+
 /* Main content styles */
 /* Add some margin and padding to the content */
 .main-content {
@@ -139,14 +244,63 @@ li {
   padding: 20px;
 }
 
+/** Incoming Stream-Messages Window*/
 #message--window {
-  width: 350px;
-  height: 200px;
-  border: 1px solid #ccc;
-  padding: 10px;
-  overflow-y: scroll;
+  position: absolute;
+  top: 60px; /* Adjust as needed */
+  right: 25px;
+  max-height: 350px;
+  width: 400px;
+  background-color: #fff;
+  box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.2);
+  border-left: 1px solid #ddd;
+  z-index: 2;
+  overflow-y: hidden;
+  /* display: none; */
 }
 
+.message-header {
+  background-color: #f55f08;
+  color: white;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 10px;
+}
+
+/* Initially hide the times icon */
+.toggle-message-button .fa-search {
+  display: none;
+}
+
+/* Show the times icon when the button is clicked */
+.toggle-message-button.show-search-icon .fa-search {
+  display: inline;
+}
+
+.toggle-message-button.remove-times-icon .fa-times {
+  display: none;
+}
+
+.message-header h2 {
+  margin: 0;
+  font-size: 18px;
+}
+
+.close-button {
+  background: none;
+  border: none;
+  font-size: 18px;
+  color: white;
+  cursor: pointer;
+}
+
+.message-content {
+  padding: 10px;
+  max-height: 300px;
+  overflow-y: scroll;
+}
+/* ********************* */
 .hidden {
   display: none;
 }

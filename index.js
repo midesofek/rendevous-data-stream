@@ -2,37 +2,11 @@
 // Private Location Sharing Feature [0x..92 is at Los Angeles, Time: Timestamp]
 ///////////////////////////////////////////////
 
-// ✅ 1. Add connect wallet button
-// ✅ 2. Implement function to share coords through streamr
-// ✅ 3. Make One users location show on map
-// ✅ 4. Make multiple user's location show on map
-
-/////////////////////// Handle Subscribe Events ///////////////////////
-// ✅ 1. When a user subscribes to the stream, add a new marker to the page
-// ===== TWO options - a. Listen for subscribe event then display directly -b. store coords in an array then loop and display
-// ✅ 2. This marker should show the timestamp of the user that connected
-// ✅ 3. This marker should show the address of the user that connected
-// Tip: can add an event listener to listen for marker addition - then notify subscriber
-
-// ✅ NEXT: Rebuild UI to fit new plan design
-// ✅ 4. Display all published data points on screen
-// 5. Create the chat window to enable private chatting
-// 6. Create the Marketplace to enable data selling through smart contracts
-
-////////////////////////////// Phase 3 //////////////////////////////
-// - ✅ Build the message window that displays new data published to the stream
-// - ✅ Build the sidebar card for controlling streams to join / subscribe / unsubscribe / join a new stream
-// - ✅ Add footer that shows GitHub and streamr
-//////////////////////////////////////////////////////////////////////
-
-////////////////////////////// Phase 4 //////////////////////////////
-// - Edit the stream configuration, to enable published streams to coming in at intervals
-// - Search for an API to generate Location/Position data from
-//////////////////////////////////////////////////////////////////////
-
-import { StreamrClient } from "streamr-client";
+import { StreamrClient, STREAMR_STORAGE_NODE_GERMANY } from "streamr-client";
 import { connectWallet } from "./src/connectwallet";
 import { truncAddress } from "./utils/helper";
+import { PUBLISH_INTERVAL } from "./utils/config";
+import { id } from "ethers/lib/utils";
 
 // require("dotenv").config();
 
@@ -101,12 +75,28 @@ sidebarStreamChat.addEventListener("click", showStreamChatPage);
 //////////////////////////////////////////////////////////////////////
 //////////////////////////////////////////////////////////////////////
 
-// Authenticate user
+// Authenticate user -- change 'client' to "streamr"
 const client = new StreamrClient({
   auth: { ethereum: window.ethereum },
+
+  // encryption: {
+  //   litProtocolEnabled: true,
+  //   litProtocolLogging: false,
+  // },
 });
 
 const devStreamId = "0x1339514086fc15c5e38af4e0407c469ca3911992/test/stream"; // later get this dynamically
+
+// adding storage to stream
+const handleStorage = async () => {
+  const storeStreams = await client.addStreamToStorageNode(
+    devStreamId,
+    STREAMR_STORAGE_NODE_GERMANY
+  );
+  const storage = await client.getStorageNodes();
+  console.log(storage);
+};
+// handleStorage();
 
 // create private stream and generate id
 const createStreamId = async function (uniquename1, uniquename2) {
@@ -155,9 +145,17 @@ const publishData = async () => {
     const data = {
       message: userCoords,
     };
-    (await client.publish(devStreamId, data, {
-      timestamp: new Date(),
-    })) && console.log("Publish successful");
+    const handlePublish = async () => {
+      await client.publish(devStreamId, data, {
+        timestamp: new Date(),
+      });
+      console.log("Publish successful");
+    };
+    setInterval(handlePublish);
+
+    // (await client.publish(devStreamId, data, {
+    //   timestamp: new Date(),
+    // })) && console.log("Publish successful");
   } catch (err) {
     console.error(err.message);
   }
@@ -167,7 +165,30 @@ btnPublishStreamData.addEventListener("click", publishData);
 // function to subscribe to streams
 let position = 0;
 
+const resendPreviousMessages = async () => {
+  client.resend(
+    devStreamId,
+    {
+      from: {
+        timestamp: Date.now() - 1000 * 60 * 30, // 30 minutes ago
+      },
+      // last: 5,
+    },
+    (data, metadata) => {
+      const timeReceived = new Date(metadata.timestamp).toISOString();
+
+      const messageElement = document.createElement("p");
+      messageElement.textContent = `${data.message} at: ${timeReceived}`;
+      position = data.message;
+      messageContent.appendChild(messageElement);
+
+      renderLocationMarker(position, metadata.publisherId);
+    }
+  );
+};
+
 client.subscribe(devStreamId, (data, metadata) => {
+  resendPreviousMessages();
   const timeReceived = new Date(metadata.timestamp).toISOString();
 
   const messageElement = document.createElement("p");

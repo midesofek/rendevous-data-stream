@@ -104,13 +104,17 @@
               </button>
             </div>
             <div class="form__row form__row-inline">
-              <button id="button-stop-sharing">Stop Position Sharing</button>
+              <button id="test-data-stream">
+                Test Data Stream
+                <i class="fa fa-database" aria-hidden="true"></i>
+              </button>
+              <button id="button-stop-sharing">Stop Sharing Data</button>
+            </div>
+
+            <div class="form__row form__row-inline">
               <button id="button-unsubscribe">Unsubscribe</button>
             </div>
-            <button
-              class="form__btn"
-              onclick="window.open('https://streamr.network/hub/streams/new', '_blank')"
-            >
+            <button class="form__btn" id="create-new-stream">
               +Create New Stream
               <i class="fa fa-external-link" aria-hidden="true"></i>
             </button>

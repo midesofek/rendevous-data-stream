@@ -1,5 +1,5 @@
 export const fetchSampleData = async () => {
-  const res = await fetch("https://randomuser.me/api/?results=10");
+  const res = await fetch("https://randomuser.me/api/?results=2");
   const data = await res.json();
   const results = await data.results;
 

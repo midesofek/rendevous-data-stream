@@ -5,7 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Rendevous</title>
     <link rel="shortcut icon" href="./public/favicon.png" type="image/x-icon" />
-    <link rel="stylesheet" href="styles.css" />
+    <link rel="stylesheet" href="./public/styles.css" />
     <script src="https://unpkg.com/streamr-client@latest/streamr-client.web.js"></script>
 
     <script
@@ -45,7 +45,7 @@
       href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css"
     />
 
-    <script type="module" src="./index.js"></script>
+    <script type="module" src="./src/index.js"></script>
   </head>
   <body>
     <div>
@@ -85,7 +85,12 @@
         <div class="sidebar sidebar-hidden">
           <form class="form">
             <div class="form__row form__row-top">
-              <input type="text" name="" id="" placeholder="Enter Stream ID" />
+              <input
+                type="text"
+                name=""
+                id="input--streamId"
+                placeholder="Enter Stream ID"
+              />
               <!--This should notify if you have access -->
             </div>
             <div class="form__row form__row-inline">

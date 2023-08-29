@@ -3,9 +3,10 @@
 ///////////////////////////////////////////////
 
 import { StreamrClient, STREAMR_STORAGE_NODE_GERMANY } from "streamr-client";
-import { connectWallet } from "./src/connectwallet";
-import { truncAddress } from "./utils/helper";
-import { PUBLISH_INTERVAL } from "./utils/config";
+import { connectWallet } from "./connectwallet";
+import { truncAddress } from "../utils/helper";
+import { fetchSampleData } from "./api/sampleData";
+import { PUBLISH_INTERVAL } from "../utils/config";
 import { id } from "ethers/lib/utils";
 
 // require("dotenv").config();
@@ -14,6 +15,7 @@ const messageWindow = document.getElementById("message--window");
 const closeMessageButton = document.querySelector(".close-button");
 const toggleMessageButton = document.querySelector(".toggle-message-button");
 const messageContent = document.querySelector(".message-content");
+const inputStreamId = document.getElementById("input--streamId");
 const btnConnectWallet = document.querySelector(".connect-wallet-button");
 const btnPublishStreamData = document.querySelector(".publish--stream");
 const btnJoinStream = document.getElementById("join-data-stream");
@@ -77,8 +79,7 @@ sidebarStreamChat.addEventListener("click", showStreamChatPage);
 
 // Authenticate user -- change 'client' to "streamr"
 const client = new StreamrClient({
-  auth: { ethereum: window.ethereum },
-
+  // auth: { ethereum: window.ethereum },
   // encryption: {
   //   litProtocolEnabled: true,
   //   litProtocolLogging: false,
@@ -118,15 +119,32 @@ const createStreamId = async function (uniquename1, uniquename2) {
 ////////////////////////////////////////////////////////////////////////////////
 
 // function to get stream with ID
-const getStream = async function (inputStreamId) {
-  console.log("get Btn Works");
-  // this.#appId = await client.getStream(inputStreamId);
-  // const appId = await client.getStream(inputStreamId);
+const getTestStream = async function (e) {
+  e.preventDefault();
+  const id = inputStreamId.value;
+  // console.log(id);
+  console.log("Publishing Batch stream............. ");
+  const loadTestData = await fetchSampleData();
+
+  // loadTestData.forEach(async (testCoords) => {
+  //   const data = {
+  //     message: testCoords,
+  //   };
+
+  //   await client.publish(devStreamId, data, {
+  //     timestamp: new Date(),
+  //   });
+  //   console.log("Publish successful");
+  // });
+
+  // this.#appId = await client.getTestStream(inputStreamId);
+  // const appId = await client.getTestStream(inputStreamId);
 };
-btnJoinStream.addEventListener("click", getStream);
+btnJoinStream.addEventListener("click", getTestStream);
 
 // function to stop sharing position
-const stopSharingPosition = async function () {
+const stopSharingPosition = async function (e) {
+  e.preventDefault();
   console.log("Stop sharing btn works");
 };
 btnStopSharingPosition.addEventListener("click", stopSharingPosition);
@@ -140,18 +158,19 @@ btnUnsubscribe.addEventListener("click", unsubscribeFromStream);
 // function to publish streams
 const userCoords = [];
 
-const publishData = async () => {
+const publishData = async (e) => {
   try {
+    e.preventDefault();
     const data = {
       message: userCoords,
     };
-    const handlePublish = async () => {
-      await client.publish(devStreamId, data, {
-        timestamp: new Date(),
-      });
-      console.log("Publish successful");
-    };
-    setInterval(handlePublish);
+
+    await client.publish(devStreamId, data, {
+      timestamp: new Date(),
+    });
+    console.log("Publish successful");
+
+    // setInterval(handlePublish);
 
     // (await client.publish(devStreamId, data, {
     //   timestamp: new Date(),
@@ -182,13 +201,13 @@ const resendPreviousMessages = async () => {
       position = data.message;
       messageContent.appendChild(messageElement);
 
-      renderLocationMarker(position, metadata.publisherId);
+      // renderLocationMarker(position, metadata.publisherId);
     }
   );
 };
 
 client.subscribe(devStreamId, (data, metadata) => {
-  resendPreviousMessages();
+  // resendPreviousMessages();
   const timeReceived = new Date(metadata.timestamp).toISOString();
 
   const messageElement = document.createElement("p");

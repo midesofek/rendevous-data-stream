@@ -1,26 +1,21 @@
 {
   "name": "rendevous",
-  "version": "1.0.0",
-  "description": "a position sharing decentralized application",
-  "main": "index.js",
+  "version": "0.1.0",
+  "private": true,
   "scripts": {
-    "start": "parcel index.html",
-    "build": "parcel build index.html --dist-dir ./dist"
+    "dev": "next dev",
+    "build": "next build",
+    "start": "next start",
+    "lint": "next lint"
   },
-  "repository": {
-    "type": "git",
-    "url": "git+https://github.com/midesofek/rendevous-data-stream.git"
-  },
-  "author": "mide-sofek",
-  "license": "ISC",
-  "bugs": {
-    "url": "https://github.com/midesofek/rendevous-data-stream/issues"
-  },
-  "homepage": "https://github.com/midesofek/rendevous-data-stream#readme",
   "dependencies": {
-    "dotenv": "^16.3.1",
+    "@thirdweb-dev/react": "^3.14.39",
+    "@thirdweb-dev/sdk": "^3.10.58",
+    "eslint": "8.48.0",
+    "eslint-config-next": "13.4.19",
     "ethers": "^5.7.2",
-    "parcel": "^2.9.3",
-    "streamr-client": "^8.5.5"
+    "next": "13.4.19",
+    "react": "18.2.0",
+    "react-dom": "18.2.0"
   }
 }

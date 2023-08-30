@@ -247,7 +247,7 @@ li {
 /** Incoming Stream-Messages Window*/
 #message--window {
   position: absolute;
-  top: 60px; /* Adjust as needed */
+  top: 70px; /* Adjust as needed */
   right: 25px;
   max-height: 350px;
   width: 400px;

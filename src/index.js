@@ -88,7 +88,8 @@ const client = new StreamrClient({
   // },
 });
 
-const devStreamId = "0x1339514086fc15c5e38af4e0407c469ca3911992/test/stream"; // later get this dynamically
+const devStreamId =
+  "0x1339514086fc15c5e38af4e0407c469ca3911992/user-location-data-stream"; // later get this dynamically
 
 // adding storage to stream
 const handleStorage = async () => {

@@ -1,10 +1,64 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
+// import { StreamrClient } from "streamr-client";
+// import { subscribe } from "./utils/subscribe";
+
+// 0x1339514086fc15c5e38af4e0407c469ca3911992/user-location-data-stream
 
 export const Sidebar = () => {
   const [isSidebarHidden, setIsSidebarHidden] = useState(true);
+  const [streamId, setStreamId] = useState("");
+
+  const subscribe = (id) => {
+    // Authenticate user -- change 'client' to "streamr"
+    const streamr = new StreamrClient({
+      // auth: { ethereum: window.ethereum },
+    });
+
+    return streamr.subscribe(id, (data, metadata) => {
+      // resendPreviousMessages();
+      const timeReceived = new Date(metadata.timestamp).toISOString();
+
+      const messageElement = document.createElement("p");
+      messageElement.textContent = `${data.message} at: ${timeReceived}`;
+      position = data.message;
+      messageContent.appendChild(messageElement);
+
+      renderLocationMarker(position, metadata.publisherId);
+    });
+  };
 
   const toggleSideBar = () => {
     setIsSidebarHidden((prevState) => !prevState);
+  };
+
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    console.log("Submit works!");
+    console.log("id is: ", streamId);
+    subscribe(streamId);
+  };
+
+  const handleJoinStream = (id) => {
+    console.log("Join Works");
+    ("Joining Stream.......");
+    subscribe(id);
+  };
+
+  const handlePublishStream = () => {
+    console.log("Share Works");
+  };
+
+  const handleJoinTestStream = () => {
+    console.log("Test Stream");
+  };
+
+  const handleUnsubscribe = () => {
+    console.log("Unsubscribe works");
+  };
+
+  const handleCreateStream = (e) => {
+    e.preventDefault();
+    window.open("https://streamr.network/hub/streams/new", "_blank");
   };
 
   return (
@@ -13,28 +67,39 @@ export const Sidebar = () => {
         <i className="fas fa-bars"></i>
       </button>
       <div className={`sidebar ${isSidebarHidden ? "sidebar-hidden" : ""}`}>
-        <form className="form">
+        <form className="form" onSubmit={handleSubmit}>
           <div className="form__row form__row-top">
             <input
               type="text"
               name=""
               id="input--streamId"
               placeholder="Enter Stream ID"
+              // value={streamId}
+              onChange={(e) => {
+                console.log(e.target.value);
+                setStreamId(e.target.value);
+                console.log("Subscribing to stream");
+                console.log("Stream id is: ", streamId);
+              }}
             />
-            {/* <!--This should notify if you have access --> */}
           </div>
+        </form>
+        <asides className="form">
           <div className="form__row form__row-inline">
-            <button id="join-data-stream">
+            <button
+              id="join-data-stream"
+              onClick={() => handleJoinStream(streamId)}
+            >
               Join Data Stream
               <i className="fa fa-database" aria-hidden="true"></i>
             </button>
-            <button className="publish--stream">
+            <button className="publish--stream" onClick={handlePublishStream}>
               Share Your Position
               {/* <!-- <i className="fa fa-map-marker" aria-hidden="true"></i> --> */}
             </button>
           </div>
           <div className="form__row form__row-inline">
-            <button id="test-data-stream">
+            <button id="test-data-stream" onClick={handleJoinTestStream}>
               Test Data Stream
               <i className="fa fa-database" aria-hidden="true"></i>
             </button>
@@ -42,13 +107,20 @@ export const Sidebar = () => {
           </div>
 
           <div className="form__row form__row-inline">
-            <button id="button-unsubscribe">Unsubscribe</button>
+            <button id="button-unsubscribe" onClick={handleUnsubscribe}>
+              Unsubscribe
+            </button>
           </div>
-          <button className="form__btn" id="create-new-stream">
+          <button
+            className="form__btn"
+            id="create-new-stream"
+            onClick={handleCreateStream}
+          >
             +Create New Stream
             <i className="fa fa-external-link" aria-hidden="true"></i>
           </button>
-        </form>
+        </asides>
+
         <p className="copyright">
           &copy; Mide. Powered By
           <a

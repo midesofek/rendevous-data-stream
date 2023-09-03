@@ -1,4 +1,5 @@
 import { Html, Head, Main, NextScript } from "next/document";
+import { StreamrClient } from "streamr-client";
 import { Navbar } from "/components/Navbar";
 import { Sidebar } from "/components/Sidebar";
 import { RenderMap } from "/components/RenderMap";
@@ -14,7 +15,7 @@ export default function Document() {
         <Main />
 
         {/* <Sidebar /> */}
-        <IncomingStreams />
+        {/* <IncomingStreams /> */}
         {/* <RenderMap /> */}
         <NextScript />
         <div id="map"></div>

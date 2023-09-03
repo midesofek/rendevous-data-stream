@@ -20,6 +20,7 @@ export default function Home() {
         <div></div>
         {/* <Sidebar /> */}
         {/* <IncomingStreams />*/}
+        <IncomingStreams />
 
         <div id="map"></div>
       </main>

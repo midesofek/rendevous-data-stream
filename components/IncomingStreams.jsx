@@ -24,6 +24,9 @@ export const IncomingStreams = function () {
       </div>
       <div className={`${isClosed ? "" : "message-content"}`}>
         {/* <!-- Stream-Messages will be added dynamically here --> */}
+        {/* <div className="message-content">
+          <p key={`index`}>{`message`}</p>
+        </div> */}
       </div>
     </div>
   );

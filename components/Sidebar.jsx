@@ -1,29 +1,47 @@
 import React, { useState, useEffect } from "react";
 // import { StreamrClient } from "streamr-client";
-// import { subscribe } from "./utils/subscribe";
 
 // 0x1339514086fc15c5e38af4e0407c469ca3911992/user-location-data-stream
 
 export const Sidebar = () => {
   const [isSidebarHidden, setIsSidebarHidden] = useState(true);
   const [streamId, setStreamId] = useState("");
+  const [messages, setMessages] = useState([]);
+  const [position, setPosition] = useState("");
 
   const subscribe = (id) => {
     // Authenticate user -- change 'client' to "streamr"
     const streamr = new StreamrClient({
-      // auth: { ethereum: window.ethereum },
+      auth: { ethereum: window.ethereum },
     });
 
-    return streamr.subscribe(id, (data, metadata) => {
+    streamr.subscribe(id, (data, metadata) => {
       // resendPreviousMessages();
       const timeReceived = new Date(metadata.timestamp).toISOString();
 
-      const messageElement = document.createElement("p");
-      messageElement.textContent = `${data.message} at: ${timeReceived}`;
-      position = data.message;
-      messageContent.appendChild(messageElement);
+      const newMessage = `${data.message} at: ${timeReceived}`;
+      console.log(newMessage);
 
-      renderLocationMarker(position, metadata.publisherId);
+      // Update the messages state with the new message
+      setMessages((prevMessages) => [...prevMessages, newMessage]);
+
+      // Update the position state
+      setPosition(data.message);
+      console.log(messages, position);
+
+      // renderLocationMarker(position, metadata.publisherId);
+      return (
+        <div>
+          {/* Render location marker or other components */}
+          {/* Example: <LocationMarker position={position} /> */}
+
+          <div className="message-content">
+            {messages.map((message, index) => (
+              <p key={index}>{message}</p>
+            ))}
+          </div>
+        </div>
+      );
     });
   };
 
@@ -143,5 +161,3 @@ export const Sidebar = () => {
     </>
   );
 };
-
-// export default Sidebar;

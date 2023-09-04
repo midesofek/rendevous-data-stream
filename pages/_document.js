@@ -18,7 +18,7 @@ export default function Document() {
         {/* <IncomingStreams /> */}
         {/* <RenderMap /> */}
         <NextScript />
-        <div id="map"></div>
+        {/* <div id="map"></div> */}
       </body>
     </Html>
   );

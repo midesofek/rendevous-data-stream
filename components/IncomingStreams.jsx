@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 
-export const IncomingStreams = function () {
+export const IncomingStreams = function ({ messages }) {
   const [isClosed, setIsClosed] = useState(false);
 
   const toggleMessageWindow = () => {
@@ -23,11 +23,19 @@ export const IncomingStreams = function () {
         </button>
       </div>
       <div className={`${isClosed ? "" : "message-content"}`}>
-        {/* <!-- Stream-Messages will be added dynamically here --> */}
-        {/* <div className="message-content">
-          <p key={`index`}>{`message`}</p>
-        </div> */}
+        {messages.map((msg) => {
+          console.log("THis is: ", msg);
+          return <Message msg={msg} />;
+        })}
       </div>
     </div>
   );
 };
+
+function Message({ msg }) {
+  return (
+    <div className="message-content">
+      <p key={`index`}>{msg}</p>
+    </div>
+  );
+}

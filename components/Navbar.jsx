@@ -3,7 +3,7 @@ import { connectWallet } from "./utils/connectWallet";
 import React, { useState } from "react";
 // import { ConnectWallet } from "@thirdweb-dev/react";
 
-export const Navbar = function () {
+export const Navbar = function ({ onAddNewMessages }) {
   const [isConnected, setIsConnected] = useState(false);
 
   const connectWallet = async function () {
@@ -29,7 +29,7 @@ export const Navbar = function () {
       <div className="navbar-logo">
         <span className="brand">Rendevous</span>
       </div>
-      <Sidebar />
+      <Sidebar onAddNewMessages={onAddNewMessages} />
 
       <ul className="navbar-links">
         <li>

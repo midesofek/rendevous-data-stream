@@ -1,47 +1,44 @@
 import React, { useState, useEffect } from "react";
-// import { StreamrClient } from "streamr-client";
+import { Subscribe } from "./utils/Subscribe";
 
 // 0x1339514086fc15c5e38af4e0407c469ca3911992/user-location-data-stream
 
-export const Sidebar = () => {
+export const Sidebar = ({ onAddNewMessages }) => {
   const [isSidebarHidden, setIsSidebarHidden] = useState(true);
-  const [streamId, setStreamId] = useState("");
-  const [messages, setMessages] = useState([]);
-  const [position, setPosition] = useState("");
 
-  const subscribe = (id) => {
+  const [streamId, setStreamId] = useState("");
+
+  async function resendPreviousMessages(id, streamr) {
+    return streamr.resend(
+      id,
+      {
+        // from: {
+        //   timestamp: Date.now() - 1000 * 60 * 30, // 30 minutes ago
+        // },
+        last: 10,
+      },
+      (data, metadata) => {
+        const timeReceived = new Date(metadata.timestamp).toISOString();
+
+        const newMessage = `${data.message} at: ${timeReceived}`;
+        onAddNewMessages(newMessage);
+        console.log(newMessage);
+      }
+    );
+  }
+
+  const subscribe = async (id) => {
     // Authenticate user -- change 'client' to "streamr"
     const streamr = new StreamrClient({
       auth: { ethereum: window.ethereum },
     });
 
+    await resendPreviousMessages(id, streamr);
     streamr.subscribe(id, (data, metadata) => {
-      // resendPreviousMessages();
       const timeReceived = new Date(metadata.timestamp).toISOString();
 
       const newMessage = `${data.message} at: ${timeReceived}`;
-      console.log(newMessage);
-
-      // Update the messages state with the new message
-      setMessages((prevMessages) => [...prevMessages, newMessage]);
-
-      // Update the position state
-      setPosition(data.message);
-      console.log(messages, position);
-
-      // renderLocationMarker(position, metadata.publisherId);
-      return (
-        <div>
-          {/* Render location marker or other components */}
-          {/* Example: <LocationMarker position={position} /> */}
-
-          <div className="message-content">
-            {messages.map((message, index) => (
-              <p key={index}>{message}</p>
-            ))}
-          </div>
-        </div>
-      );
+      onAddNewMessages(newMessage);
     });
   };
 

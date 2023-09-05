@@ -85,8 +85,14 @@ export const Sidebar = ({ onAddNewMessages, userCoords }) => {
     subscribe(RENDEVOUS_DEFAULT_STREAMID);
   };
 
-  const handleUnsubscribe = () => {
-    console.log("Unsubscribe works");
+  const handleUnsubscribe = async () => {
+    try {
+      console.log("Unsubscribe works");
+      await streamr.unsubscribe();
+      console.log("You have successfully unsubscribed");
+    } catch (err) {
+      console.log(err.message, "Failed to Unsubscribe!");
+    }
   };
 
   const handleCreateStream = (e) => {
@@ -139,14 +145,20 @@ export const Sidebar = ({ onAddNewMessages, userCoords }) => {
               Test Data Stream
               <i className="fa fa-database" aria-hidden="true"></i>
             </button>
-            <button id="button-stop-sharing">Stop Sharing Data</button>
+            <button
+              id="button-unsubscribe"
+              onClick={() => handleUnsubscribe(streamId)}
+            >
+              Unsubscribe Stream
+            </button>
+            {/* <button id="button-stop-sharing">Stop Sharing Data</button> */}
           </div>
 
-          <div className="form__row form__row-inline">
+          {/* <div className="form__row form__row-inline">
             <button id="button-unsubscribe" onClick={handleUnsubscribe}>
               Unsubscribe
-            </button>
-          </div>
+            </button> 
+          </div>*/}
           <button
             className="form__btn"
             id="create-new-stream"

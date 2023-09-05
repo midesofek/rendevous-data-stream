@@ -23,6 +23,14 @@ export const Navbar = function ({ onAddNewMessages, userCoords }) {
     }
   };
 
+  const handleGuide = (e) => {
+    e.preventDefault();
+    window.open(
+      "https://midesofek.hashnode.dev/streamr-open-data-challenge-introducing-rendevous",
+      "_blank"
+    );
+  };
+
   return (
     <div className="navbar">
       <div className="navbar-logo">
@@ -47,8 +55,8 @@ export const Navbar = function ({ onAddNewMessages, userCoords }) {
           </a>
         </li>
         <li>
-          <a href="#" className="navbar-link">
-            Docs <i className="fa fa-external-link" aria-hidden="true"></i>
+          <a href="" className="navbar-link" onClick={handleGuide}>
+            Guide <i className="fa fa-external-link" aria-hidden="true"></i>
           </a>
         </li>
       </ul>

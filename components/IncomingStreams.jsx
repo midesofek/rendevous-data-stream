@@ -4,10 +4,10 @@ export const IncomingStreams = function ({ messages }) {
   const [isClosed, setIsClosed] = useState(false);
 
   const toggleMessageWindow = () => {
-    console.log("It works!");
     console.log(isClosed);
     setIsClosed((prevState) => !prevState);
   };
+
   return (
     <div id="message--window">
       <div className="message-header">
@@ -24,7 +24,7 @@ export const IncomingStreams = function ({ messages }) {
       </div>
       <div className={`${isClosed ? "" : "message-content"}`}>
         {messages.map((msg) => {
-          console.log("THis is: ", msg);
+          console.log("This is: ", msg);
           return <Message msg={msg} />;
         })}
       </div>
@@ -35,7 +35,7 @@ export const IncomingStreams = function ({ messages }) {
 function Message({ msg }) {
   return (
     <div className="message-content">
-      <p key={`index`}>{msg}</p>
+      <p key={msg}>{msg}</p>
     </div>
   );
 }

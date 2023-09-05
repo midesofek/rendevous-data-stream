@@ -1,5 +1,7 @@
 import React, { useState, useEffect } from "react";
+// import renderLocationMarker from "./utils/renderMarker";
 import { RENDEVOUS_DEFAULT_STREAMID } from "../config";
+import { toast } from "react-toastify";
 
 // 0x1339514086fc15c5e38af4e0407c469ca3911992/user-location-data-stream
 
@@ -27,19 +29,41 @@ export const Sidebar = ({ onAddNewMessages, userCoords }) => {
     );
   }
 
+  async function renderLocationMarker(position) {
+    L.marker(position)
+      .addTo(map)
+      .bindPopup(
+        L.popup({
+          maxWidth: 250,
+          minWidth: 100,
+          autoClose: false,
+          closeOnClick: false,
+        })
+      )
+      .setPopupContent(`You are here`)
+      .openPopup(); // Display Marker
+  }
+
   const subscribe = async (id) => {
-    // Authenticate user -- change 'client' to "streamr"
-    const streamr = new StreamrClient({
-      auth: { ethereum: window.ethereum },
-    });
+    try {
+      // Authenticate user -- change 'client' to "streamr"
+      const streamr = new StreamrClient({
+        auth: { ethereum: window.ethereum },
+      });
 
-    await resendPreviousMessages(id, streamr);
-    streamr.subscribe(id, (data, metadata) => {
-      const timeReceived = new Date(metadata.timestamp).toISOString();
+      await resendPreviousMessages(id, streamr);
+      streamr.subscribe(id, (data, metadata) => {
+        const timeReceived = new Date(metadata.timestamp).toISOString();
 
-      const newMessage = `${data.message} at: ${timeReceived}`;
-      onAddNewMessages(newMessage);
-    });
+        const newMessage = `${data.message} at: ${timeReceived}`;
+        onAddNewMessages(newMessage);
+        // onSetLocationMarker(data.message);
+      });
+      toast.success("Subscription successful!");
+    } catch (err) {
+      console.log(err.message);
+      toast.error(`Failed! Reason: ${err.message}`);
+    }
   };
 
   const toggleSideBar = () => {
@@ -75,8 +99,10 @@ export const Sidebar = ({ onAddNewMessages, userCoords }) => {
         timestamp: new Date(),
       });
       console.log("Publish successful");
+      toast.success("Publish successful");
     } catch (err) {
       console.log(err.message);
+      toast.error(`Failed to publish! Reason: ${err.message}`);
     }
   };
 
@@ -87,11 +113,14 @@ export const Sidebar = ({ onAddNewMessages, userCoords }) => {
 
   const handleUnsubscribe = async () => {
     try {
-      console.log("Unsubscribe works");
+      const streamr = new StreamrClient({
+        auth: { ethereum: window.ethereum },
+      });
       await streamr.unsubscribe();
-      console.log("You have successfully unsubscribed");
+      toast.success("You have successfully unsubscribed");
     } catch (err) {
       console.log(err.message, "Failed to Unsubscribe!");
+      toast.error(`Failed to Unsubscribe! \n Reason: ${err.message}`);
     }
   };
 

@@ -1,9 +1,12 @@
 import { Sidebar } from "./Sidebar";
 import { connectWallet } from "./utils/connectWallet";
 import React, { useState } from "react";
+import Link from "next/link";
+import { useRouter } from "next/router";
 
 export const Navbar = function ({ onAddNewMessages, userCoords }) {
   const [isConnected, setIsConnected] = useState(false);
+  const router = useRouter();
 
   const connectWallet = async function () {
     try {
@@ -39,20 +42,24 @@ export const Navbar = function ({ onAddNewMessages, userCoords }) {
       <Sidebar onAddNewMessages={onAddNewMessages} userCoords={userCoords} />
 
       <ul className="navbar-links">
+        <Link
+          href={"/"}
+          className="navbar--view-streamers-location navbar-link"
+        >
+          Join Stream <i className="fa fa-database" aria-hidden="true"></i>
+        </Link>
         <li>
-          <a href="#" className="navbar--view-streamers-location navbar-link">
-            Join Stream <i className="fa fa-database" aria-hidden="true"></i>
-          </a>
-        </li>
-        <li>
-          <a href="#" className="navbar-link">
+          <Link href={"/Marketplace"} className="navbar-link">
             Marketplace <i className="fa fa-exchange" aria-hidden="true"></i>
-          </a>
+          </Link>
         </li>
         <li>
-          <a href="#" className="navbar--view-stramers-chat navbar-link">
+          <Link
+            href={"/StreamChat"}
+            className="navbar--view-stramers-chat navbar-link"
+          >
             Stream Chat <i className="fa fa-comments" aria-hidden="true"></i>
-          </a>
+          </Link>
         </li>
         <li>
           <a href="" className="navbar-link" onClick={handleGuide}>
@@ -60,11 +67,6 @@ export const Navbar = function ({ onAddNewMessages, userCoords }) {
           </a>
         </li>
       </ul>
-      {/* <ConnectWallet
-        className="connect-wallet-button"
-        switchToActiveChain={true}
-        theme="light"
-      /> */}
       <button className="connect-wallet-button" onClick={connectWallet}>{`${
         isConnected ? "Connected!" : "Connect Wallet"
       } `}</button>

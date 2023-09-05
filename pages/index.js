@@ -6,10 +6,6 @@ import { Sidebar } from "/components/Sidebar";
 import { RenderMap } from "/components/RenderMap";
 import { ToastContainer, toast } from "react-toastify";
 import { IncomingStreams } from "/components/IncomingStreams";
-import { BrowserRouter as Router, Route, Switch } from "react-router-dom";
-
-import Marketplace from "/components/Marketplace";
-import StreamChat from "/components/StreamChat";
 
 const inter = Inter({ subsets: ["latin"] });
 

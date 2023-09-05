@@ -348,3 +348,16 @@ li {
 }
 
 /** ******************** */
+/* Coming Soon component */
+.coming-soon-container {
+  display: flex;
+  justify-content: center; /* Horizontal centering */
+  align-items: center; /* Vertical centering */
+  height: 100vh; /* Full viewport height */
+}
+
+.coming-soon-text {
+  font-size: 24px;
+  text-align: center;
+  /* You can further style the text as needed */
+}

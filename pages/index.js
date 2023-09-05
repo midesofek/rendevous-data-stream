@@ -13,6 +13,7 @@ const inter = Inter({ subsets: ["latin"] });
 
 export default function Home() {
   const [messages, setMessages] = useState([]);
+  const [userCoordsState, setUserCoordsState] = useState([]);
 
   function handleAddNewMessages(streamMessage) {
     setMessages((messages) => [...messages, streamMessage]);
@@ -21,8 +22,11 @@ export default function Home() {
   return (
     <>
       <Header />
-      <Navbar onAddNewMessages={handleAddNewMessages} />
-      <RenderMap />
+      <Navbar
+        onAddNewMessages={handleAddNewMessages}
+        userCoords={userCoordsState}
+      />
+      <RenderMap setUserCoordsState={setUserCoordsState} />
       <main>
         <div></div>
         {/* <Sidebar /> */}

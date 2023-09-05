@@ -1,9 +1,9 @@
 import React, { useState, useEffect } from "react";
-import { Subscribe } from "./utils/Subscribe";
+import { RENDEVOUS_DEFAULT_STREAMID } from "../config";
 
 // 0x1339514086fc15c5e38af4e0407c469ca3911992/user-location-data-stream
 
-export const Sidebar = ({ onAddNewMessages }) => {
+export const Sidebar = ({ onAddNewMessages, userCoords }) => {
   const [isSidebarHidden, setIsSidebarHidden] = useState(true);
 
   const [streamId, setStreamId] = useState("");
@@ -59,12 +59,30 @@ export const Sidebar = ({ onAddNewMessages }) => {
     subscribe(id);
   };
 
-  const handlePublishStream = () => {
-    console.log("Share Works");
+  const handlePublishStream = async (id) => {
+    try {
+      console.log("Publishing....");
+
+      const streamr = new StreamrClient({
+        auth: { ethereum: window.ethereum },
+      });
+
+      const data = {
+        message: userCoords,
+      };
+
+      await streamr.publish(id, data, {
+        timestamp: new Date(),
+      });
+      console.log("Publish successful");
+    } catch (err) {
+      console.log(err.message);
+    }
   };
 
   const handleJoinTestStream = () => {
     console.log("Test Stream");
+    subscribe(RENDEVOUS_DEFAULT_STREAMID);
   };
 
   const handleUnsubscribe = () => {
@@ -108,7 +126,10 @@ export const Sidebar = ({ onAddNewMessages }) => {
               Join Data Stream
               <i className="fa fa-database" aria-hidden="true"></i>
             </button>
-            <button className="publish--stream" onClick={handlePublishStream}>
+            <button
+              className="publish--stream"
+              onClick={() => handlePublishStream(streamId)}
+            >
               Share Your Position
               {/* <!-- <i className="fa fa-map-marker" aria-hidden="true"></i> --> */}
             </button>

@@ -1,9 +1,8 @@
 import { Sidebar } from "./Sidebar";
 import { connectWallet } from "./utils/connectWallet";
 import React, { useState } from "react";
-// import { ConnectWallet } from "@thirdweb-dev/react";
 
-export const Navbar = function ({ onAddNewMessages }) {
+export const Navbar = function ({ onAddNewMessages, userCoords }) {
   const [isConnected, setIsConnected] = useState(false);
 
   const connectWallet = async function () {
@@ -29,7 +28,7 @@ export const Navbar = function ({ onAddNewMessages }) {
       <div className="navbar-logo">
         <span className="brand">Rendevous</span>
       </div>
-      <Sidebar onAddNewMessages={onAddNewMessages} />
+      <Sidebar onAddNewMessages={onAddNewMessages} userCoords={userCoords} />
 
       <ul className="navbar-links">
         <li>

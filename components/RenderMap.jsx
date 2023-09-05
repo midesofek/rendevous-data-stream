@@ -1,14 +1,14 @@
 import { useEffect, useState } from "react";
 
-export const RenderMap = function () {
+export const RenderMap = function ({ setUserCoordsState }) {
   console.log("RenderMap??");
-  const [userCoords, setUserCoords] = useState([]);
-  const [position, setPosition] = useState(0);
+  // const [position, setPosition] = useState(0);
 
+  const userCoords = [];
   // let position = 0;
   let map;
 
-  const loadMap = function (pos) {
+  function loadMap(pos) {
     console.log(pos, "");
     const zoomLevel = 13;
     map = L.map("map").setView(pos, zoomLevel);
@@ -16,7 +16,8 @@ export const RenderMap = function () {
       attribution:
         '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors',
     }).addTo(map);
-  };
+    setUserCoordsState(pos);
+  }
 
   // get user's location
 
@@ -24,10 +25,11 @@ export const RenderMap = function () {
     const success = function (pos) {
       const { latitude, longitude } = pos.coords;
       userCoords.push(latitude, longitude);
+      console.log("v1", userCoords);
       console.log(
         `User latitude is ${userCoords[0]}\nUser Longitude is ${userCoords[1]}`
       );
-      loadMap(userCoords);
+      loadMap([...userCoords]);
     };
 
     const failedToConnect = function () {

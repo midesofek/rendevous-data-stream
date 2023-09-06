@@ -208,7 +208,10 @@ export const Sidebar = ({ onAddNewMessages, userCoords }) => {
             Streamr Network
           </a>
           .<br />
-          <a href="https://github.com/midesofek" target="_blank">
+          <a
+            href="https://github.com/midesofek/rendevous-data-stream"
+            target="_blank"
+          >
             <img
               className="github-logo"
               src="https://github.githubassets.com/images/modules/logos_page/GitHub-Mark.png"

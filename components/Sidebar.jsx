@@ -22,9 +22,9 @@ export const Sidebar = ({ onAddNewMessages, userCoords }) => {
       (data, metadata) => {
         const timeReceived = new Date(metadata.timestamp).toISOString();
 
-        const newMessage = `${data.message} at: ${timeReceived}`;
+        // const newMessage = `${data.message} at: ${timeReceived}`;
+        const newMessage = { data: data.message, time: timeReceived };
         onAddNewMessages(newMessage);
-        console.log(newMessage);
       }
     );
   }
@@ -72,14 +72,10 @@ export const Sidebar = ({ onAddNewMessages, userCoords }) => {
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    console.log("Submit works!");
-    console.log("id is: ", streamId);
     subscribe(streamId);
   };
 
   const handleJoinStream = (id) => {
-    console.log("Join Works");
-    ("Joining Stream.......");
     subscribe(id);
   };
 
@@ -107,7 +103,6 @@ export const Sidebar = ({ onAddNewMessages, userCoords }) => {
   };
 
   const handleJoinTestStream = () => {
-    console.log("Test Stream");
     subscribe(RENDEVOUS_DEFAULT_STREAMID);
   };
 
@@ -144,7 +139,6 @@ export const Sidebar = ({ onAddNewMessages, userCoords }) => {
               placeholder="Enter Stream ID"
               // value={streamId}
               onChange={(e) => {
-                console.log(e.target.value);
                 setStreamId(e.target.value);
                 console.log("Subscribing to stream");
                 console.log("Stream id is: ", streamId);
